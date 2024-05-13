@@ -13,4 +13,5 @@ Form1.addEventListener("submit", () => {
     urlObject.searchParams.set("quantity", quantityOfProduct);
     urlObject.searchParams.set("messsage", messageOfCustomer);
     fetch(urlObject.toString());
+    console.log("Đã nhận được thông tin của bạn");
 });

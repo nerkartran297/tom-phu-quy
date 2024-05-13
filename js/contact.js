@@ -1,4 +1,5 @@
 const Form2 = document.querySelector("#user_contact");
+
 Form2.addEventListener("submit", () => {
     const urlObject = new URL("https://script.google.com/macros/s/AKfycby5wdinYPwLe-L06u03XQ5p6RZW9q0dfMn_blJxVig3P8Z7QLlRJP3k_LwWCDWNttKu/exec");
     const userName = document.getElementById('name').value;
@@ -10,4 +11,5 @@ Form2.addEventListener("submit", () => {
     urlObject.searchParams.set("subject", subject);
     urlObject.searchParams.set("messsageCT", messageContact);
     fetch(urlObject.toString());
+    console.log("Đã nhận được thông tin của bạn");
 });
