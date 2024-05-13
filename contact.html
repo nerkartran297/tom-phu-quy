@@ -62,7 +62,7 @@
                         <a href="index.html" class="nav-item nav-link">Trang chủ</a>
                         <a href="about.html" class="nav-item nav-link">Thông tin</a>
                         <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-                        <a href="menu.html" class="nav-item nav-link">Menu</a>
+                        <a href="menu.html" class="nav-item nav-link">Sản phẩm</a>
                         <a href="testimonial.html" class="nav-item nav-link">Trải nghiệm</a>
                         <a href="contact.html" class="nav-item nav-link active">Liên hệ</a>
                     </div>
@@ -121,30 +121,30 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
                                             <label for="name">Họ và tên</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
                                             <label for="email">Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                            <input type="text" class="form-control" id="subject" placeholder="Subject" required>
                                             <label for="subject">Chủ đề</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
+                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" required></textarea>
                                             <label for="message">Nội dung</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3" id = "contact_btn" type="submit">Gửi</button>
+                                        <button class="btn btn-primary w-100 py-3" id="btn" type="submit">Gửi</button>
                                     </div>
                                 </div>
                             </form>
@@ -208,7 +208,7 @@
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Quay lại trang chủ</a>
+                                <a href="index.html">Quay lại trang chủ</a>
                             </div>
                         </div>
                     </div>
@@ -239,18 +239,51 @@
         const Form2 = document.querySelector("#user_contact");
         Form2.addEventListener("submit", (event) => {
             event.preventDefault();
-            const urlObject = new URL("https://script.google.com/macros/s/AKfycby5wdinYPwLe-L06u03XQ5p6RZW9q0dfMn_blJxVig3P8Z7QLlRJP3k_LwWCDWNttKu/exec");
-            const userName = document.getElementById('name').value;
-            const userEmail = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const messageContact = document.getElementById('message').value;
-            urlObject.searchParams.set("userName", userName);
-            urlObject.searchParams.set("userEmail", userEmail);
-            urlObject.searchParams.set("subject", subject);
-            urlObject.searchParams.set("messsageCT", messageContact);
-            fetch(urlObject.toString());
-            alert("Đã nhận được thông tin của bạn");
         });
+    </script>
+    <script>
+        function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        return emailRegex.test(email);
+        }
+        document.getElementById('btn').addEventListener('click', function() {
+            const userName = document.getElementById('name');
+            const userEmail = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const messageContact = document.getElementById('message');
+            if (!isValidEmail(userEmail.value) || userName.value === '' 
+            || userEmail.value === '' || subject.value === '' || messageContact.value === '') {
+                showToastNotification('Vui lòng điền đầy đủ thông tin');
+            } else {
+                showToastNotification('Bạn đã đặt hàng thành công');
+                const urlObject = new URL("https://script.google.com/macros/s/AKfycby5wdinYPwLe-L06u03XQ5p6RZW9q0dfMn_blJxVig3P8Z7QLlRJP3k_LwWCDWNttKu/exec");
+                urlObject.searchParams.set("userName", userName.value);
+                urlObject.searchParams.set("userEmail", userEmail.value);
+                urlObject.searchParams.set("subject", subject.value);
+                urlObject.searchParams.set("messsageCT", messageContact.value);
+                fetch(urlObject.toString());
+                setTimeout(function() {
+                    userName.value = "";
+                    userEmail.value = "";
+                    subject.value = "";
+                    messageContact.value = "";
+                }, 1000);
+            }
+        });
+        function showToastNotification(message) {
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                document.body.appendChild(toastContainer);
+            }
+            toastContainer.textContent = message;
+            toastContainer.style.display = 'block';
+            setTimeout(function() {
+                toastContainer.style.display = 'none';
+            }, 2000);
+        }
     </script>
 </body>
 

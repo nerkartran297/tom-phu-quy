@@ -62,7 +62,7 @@
                         <a href="index.html" class="nav-item nav-link">Trang chủ</a>
                         <a href="about.html" class="nav-item nav-link">Thông tin</a>
                         <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-                        <a href="menu.html" class="nav-item nav-link">Menu</a>
+                        <a href="menu.html" class="nav-item nav-link">Sản phẩm</a>
                         <a href="testimonial.html" class="nav-item nav-link">Trải nghiệm</a>
                         <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
                     </div>
@@ -90,7 +90,7 @@
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="video">
-                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
+                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/rey2LzHYHsE" data-bs-target="#videoModal">
                             <span></span>
                         </button>
                     </div>
@@ -98,41 +98,41 @@
                 <div class="col-md-6 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Đặt hàng online</h5>
-                        <h1 class="text-white mb-4">Đặt sản phẩm online ngay</h1>
+                        <h1 class="text-white mb-4">Đặt sản phẩm ngay</h1>
                         <form id = "user_booking">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
                                         <label for="name">Họ và tên</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                        <input type="email" class="form-control" id="email" placeholder="Your Email" required>
                                         <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="phone-number" placeholder="Your Phone Number">
+                                        <input type="text" class="form-control" id="phone-number" placeholder="Your Phone Number" required> 
                                         <label for="phone-number">Số điện thoại</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="quantity" placeholder="Quantity">
-                                        <label for="quantity">Số lượng sản phẩm</label>
+                                        <input type="text" class="form-control" id="address" placeholder="Your Address" required>
+                                        <label for="address">Địa chỉ</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px"></textarea>
-                                        <label for="message">Tên sản phẩm và địa chỉ của bạn</label>
+                                        <textarea class="form-control" placeholder="Special Request" id="message" style="height: 100px" required></textarea>
+                                        <label for="message">Tên sản phẩm và số lượng sản phẩm</label>
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Đặt ngay</button>
+                                    <button class="btn btn-primary w-100 py-3" id="btn" type="submit">Đặt ngay</button>
                                 </div>
                                 <!-- <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Đặt ngay</button>
@@ -216,7 +216,7 @@
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Quay lại trang chủ</a>
+                                <a href="index.html">Quay lại trang chủ</a>
                             </div>
                         </div>
                     </div>
@@ -247,20 +247,53 @@
         const Form1 = document.querySelector("#user_booking");
         Form1.addEventListener("submit", (event) => {
             event.preventDefault();
-            const urlObject = new URL("https://script.google.com/macros/s/AKfycbyqs1upJ111FDObhzGsvhxz0oxNQSAIfbN_e0zsWNebsYTSg79RKAc5HBhFyE5GR7s49A/exec");
-            const userName = document.getElementById('name').value;
-            const userEmail = document.getElementById('email').value;
-            const userPhone = document.getElementById('phone-number').value;
-            const quantityOfProduct = document.getElementById('quantity').value;
-            const messageOfCustomer = document.getElementById('message').value;
-            urlObject.searchParams.set("userName", userName);
-            urlObject.searchParams.set("userEmail", userEmail);
-            urlObject.searchParams.set("userPhone", userPhone);
-            urlObject.searchParams.set("quantity", quantityOfProduct);
-            urlObject.searchParams.set("messsage", messageOfCustomer);
-            fetch(urlObject.toString());
-            alert("Đã nhận được thông tin của bạn");
         });
+    </script>
+    <script>
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        document.getElementById('btn').addEventListener('click', function() {
+            const userName = document.getElementById('name');
+            const userEmail = document.getElementById('email');
+            const userPhone = document.getElementById('phone-number');
+            const userAddress = document.getElementById('address');
+            const messageOfCustomer = document.getElementById('message');
+            if (!isValidEmail(userEmail.value) || userName.value === '' || userEmail.value === '' 
+            || userPhone.value === '' || userAddress.value === '' || messageOfCustomer.value === '') {
+                showToastNotification('Vui lòng điền đầy đủ thông tin');
+            } else {
+                showToastNotification('Bạn đã đặt hàng thành công');
+                const urlObject = new URL("https://script.google.com/macros/s/AKfycbyqs1upJ111FDObhzGsvhxz0oxNQSAIfbN_e0zsWNebsYTSg79RKAc5HBhFyE5GR7s49A/exec");
+                urlObject.searchParams.set("userName", userName.value);
+                urlObject.searchParams.set("userEmail", userEmail.value);
+                urlObject.searchParams.set("userPhone", userPhone.value);
+                urlObject.searchParams.set("quantity", userAddress.value);
+                urlObject.searchParams.set("messsage", messageOfCustomer.value);
+                fetch(urlObject.toString());
+                setTimeout(function() {
+                    userName.value = "";
+                    userEmail.value = "";
+                    userPhone.value = "";
+                    userAddress.value = "";
+                    messageOfCustomer.value = "";
+                }, 1000);
+            }
+        });
+        function showToastNotification(message) {
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                document.body.appendChild(toastContainer);
+            }
+            toastContainer.textContent = message;
+            toastContainer.style.display = 'block';
+            setTimeout(function() {
+                toastContainer.style.display = 'none';
+            }, 2000);
+        }
     </script>
 </body>
 
